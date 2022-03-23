@@ -22,3 +22,6 @@ Run `./gradlew nativeImage` to build a native binary for your system. Note that 
 ## TODO
 - Create FGD entries for new monsters
 - Make sure all customization fields are covered
+- Allow some way of overwriting parsed fields (for future proofing)
+- Add proper cli arg help
+- Tests, maybe
