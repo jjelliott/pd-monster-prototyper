@@ -34,7 +34,7 @@ public class ProgsDumpPrototyper {
 
             var argParts = arg.split("/");
 
-            var qc = new QcBuilder(argParts[argParts.length-1]).build();
+            var qc = new QcBuilder(argParts[argParts.length - 1]).build();
             System.out.println(qc);
             Files.write(Path.of(arg + ".qc"), qc.getBytes(StandardCharsets.UTF_8));
         }
@@ -42,13 +42,15 @@ public class ProgsDumpPrototyper {
 
     private static class QcBuilder {
 
+        private static final String tab = "  ";
+
         private static final List<String> FLOAT_KEYS = List.of("style", "damage_mod", "health", "proj_speed_mod", "homing");
         private static final List<String> STRING_KEYS = List.of("mdl_head", "mdl_body",
                 "obit_method", "obit_name", "snd_death", "snd_attack", "snd_idle", "snd_pain", "snd_sight", "mdl_proj", "snd_misc");
 
-        String fileName;
-        Map<String, String> values;
-        StringBuilder qc;
+        private final String fileName;
+        private final Map<String, String> values;
+        private String qc;
 
         QcBuilder(String filePath) throws IOException {
             fileName = filePath;
@@ -65,17 +67,18 @@ public class ProgsDumpPrototyper {
         }
 
         String build() {
-            qc = new StringBuilder();
-            qc.append("void() ").append(fileName.split("\\.")[0]).append(" = \n{\n");
+            qc = "";
+            qc += "void() " + fileName.split("\\.")[0] + " = \n";
+            qc += "{\n";
 
             FLOAT_KEYS.forEach(this::addFloatKey);
             STRING_KEYS.forEach(this::addStringKey);
 
-            qc.append("  ").append(values.get("classname")).append("();");
+            qc += tab + values.get("classname") + "();\n";
 
-            qc.append("\n};");
+            qc += "};";
 
-            return qc.toString();
+            return qc;
         }
 
         private void addFloatKey(String key) {
@@ -87,21 +90,15 @@ public class ProgsDumpPrototyper {
         }
 
         private void addKey(String key, boolean quote) {
-
+            var qs = quote ? "\"" : "";
             if (values.containsKey(key)) {
-                qc.append("  if (!self.").append(key).append(")\n  {\n");
-                qc.append("    self.").append(key).append(" = ");
-                if (quote) {
-                    qc.append("\"");
-                }
-                qc.append(values.get(key));
-                if (quote) {
-                    qc.append("\"");
-                }
-                qc.append(";\n");
-                qc.append("  }\n");
+                qc += tab + "if (!self." + key + ")\n";
+                qc += tab + "{\n";
+                qc += tab + tab + "self." + key + " = " + qs + values.get(key) + qs + ";\n";
+                qc += tab + "}\n";
             }
         }
+
     }
 
 }
