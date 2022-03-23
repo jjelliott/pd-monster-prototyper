@@ -20,23 +20,13 @@ public class ProgsDumpPrototyper {
 
         for (String arg : argList) {
             System.out.println("Processing " + arg + "");
-//            var entDef = Files.readString(Path.of(arg));
-//            System.out.println(entDef);
-//            var lines = entDef.split("\n");
-//
-//            var qc = new StringBuilder();
-//            qc.append("void() " + arg.split("\\.")[0] + " = \n{\n");
-//            Arrays.stream(lines).filter(it -> it.contains("classname")).findFirst().ifPresent(it -> {
-//                qc.append("  " + it.split("\\s")[1].replaceAll("\"", "") + "();");
-//            });
-//            qc.append("\n};");
-//            System.out.println(qc);
 
             var argParts = arg.split("/");
 
             var qc = new QcBuilder(argParts[argParts.length - 1]).build();
-            System.out.println(qc);
+
             Files.write(Path.of(arg + ".qc"), qc.getBytes(StandardCharsets.UTF_8));
+            System.out.println("Wrote " + arg + ".qc");
         }
     }
 
