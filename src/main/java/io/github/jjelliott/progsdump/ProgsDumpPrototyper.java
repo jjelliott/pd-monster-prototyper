@@ -60,22 +60,14 @@ public class ProgsDumpPrototyper {
             qc += "void() " + fileName.split("\\.")[0] + " = \n";
             qc += "{\n";
 
-            FLOAT_KEYS.forEach(this::addFloatKey);
-            STRING_KEYS.forEach(this::addStringKey);
+            FLOAT_KEYS.forEach(key -> addKey(key, false));
+            STRING_KEYS.forEach(key -> addKey(key, true));
 
             qc += tab + values.get("classname") + "();\n";
 
             qc += "};";
 
             return qc;
-        }
-
-        private void addFloatKey(String key) {
-            addKey(key, false);
-        }
-
-        private void addStringKey(String key) {
-            addKey(key, true);
         }
 
         private void addKey(String key, boolean quote) {
