@@ -25,3 +25,4 @@ Run `./gradlew nativeImage` to build a native binary for your system. Note that 
 - Allow some way of overwriting parsed fields (for future proofing)
 - Add proper cli arg help
 - Tests, maybe
+- Github Action to build on Linux and Windows
