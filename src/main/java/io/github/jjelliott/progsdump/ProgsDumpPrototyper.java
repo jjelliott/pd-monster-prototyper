@@ -21,9 +21,7 @@ public class ProgsDumpPrototyper {
         for (String arg : argList) {
             System.out.println("Processing " + arg + "");
 
-            var argParts = arg.split("/");
-
-            var qc = new QcBuilder(argParts[argParts.length - 1]).build();
+            var qc = new QcBuilder(arg).build();
 
             Files.write(Path.of(arg + ".qc"), qc.getBytes(StandardCharsets.UTF_8));
             System.out.println("Wrote " + arg + ".qc");
@@ -43,7 +41,8 @@ public class ProgsDumpPrototyper {
         private String qc;
 
         QcBuilder(String filePath) throws IOException {
-            fileName = filePath;
+            var pathParts = filePath.split("/");
+            fileName = pathParts[pathParts.length-1];
             values = new HashMap<>();
             Arrays.stream(Files.readString(Path.of(filePath)).split("\n")).forEach(it -> {
                 if (it.contains("\"")) {
