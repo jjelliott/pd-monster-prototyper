@@ -13,11 +13,15 @@ public class ProgsDumpPrototyper {
         }
 
         for (String arg : args) {
+            if (!arg.endsWith(".txt")){
+                System.out.println("Arg " + arg + " is not a text file, skipping.");
+                continue;
+            }
             System.out.println("Processing " + arg + "");
 
-            var qc = new QcBuilder(arg).build();
+            var output = new EntityDefinitionBuilder(arg).build();
 
-            Files.write(Path.of(arg + ".qc"), qc.getBytes(StandardCharsets.UTF_8));
+            Files.write(Path.of(arg + ".qc"), output.getBytes(StandardCharsets.UTF_8));
             System.out.println("Wrote " + arg + ".qc");
         }
     }
