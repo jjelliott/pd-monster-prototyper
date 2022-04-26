@@ -20,8 +20,6 @@ Run `./gradlew jar` to build a jar file for usage with a Java runtime on your sy
 Run `./gradlew nativeImage` to build a native binary for your system. Note that you will need to follow [this guide](https://www.graalvm.org/22.0/reference-manual/native-image/) to get this to function.
 
 ## TODO
-- Create FGD entries for new monsters
-- Make sure all customization fields are covered
 - Allow some way of overwriting parsed fields (for future proofing)
 - Add proper cli arg help
 - Tests, maybe

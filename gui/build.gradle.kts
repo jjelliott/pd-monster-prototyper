@@ -1,7 +1,7 @@
 plugins {
     java
-    id("com.palantir.graal") version("0.10.0")
-
+    id("com.palantir.graal") version ("0.10.0")
+    id("org.openjfx.javafxplugin") version ("0.0.10")
 }
 
 group = "org.example"
@@ -21,8 +21,13 @@ tasks.getByName<Test>("test") {
 }
 
 graal {
-    mainClass("io.github.jjelliott.progsdump.ProgsDumpPrototyper")
+    mainClass("io.github.jjelliott.progsdump.ProgsDumpPrototyperGui")
     outputName("pd-monster-prototyper")
     graalVersion("22.0.0.2")
     javaVersion("11")
+}
+
+javafx {
+//    version = "11.0.2"
+    modules ("javafx.controls", "javafx.fxml")
 }
